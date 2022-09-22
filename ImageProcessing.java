@@ -11,16 +11,17 @@ public class ImageProcessing {
         // The provided images are apple.jpg, flower.jpg, and kitten.jpg
         // int[][] imageData = imgToTwoD("./apple.jpg");
         // Or load your own image using a URL!
+        String fileName = "py_logo.png";
         int[][] imageData = imgToTwoD(
-                "https://content.codecademy.com/projects/project_thumbnails/phaser/bug-dodger.png");
+                "./python_logo.png");
         viewImageData(imageData);
         //
         int[][] trimmed = trimBorders(imageData, 60);
         // System.out.println(Arrays.deepToString(imageData));
-        int[][] negative = negativeColor(trimmed);
+        int[][] negative = negativeColor(imageData);
         //
-        twoDToImage(trimmed, "./trimmed_bug-dodger.jpg");
-        twoDToImage(negative, "./negative_bug-dodger.jpg");
+        twoDToImage(trimmed, "trimmed_" + fileName);
+        twoDToImage(negative, "negative_" + fileName);
         // int[][] allFilters =
         // stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData),
         // 50)), 200, 20, 40)));
