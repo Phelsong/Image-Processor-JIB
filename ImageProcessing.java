@@ -8,9 +8,7 @@ import javax.imageio.ImageIO;
 
 public class ImageProcessing {
     public static void main(String[] args) {
-        // The provided images are apple.jpg, flower.jpg, and kitten.jpg
-        // int[][] imageData = imgToTwoD("./apple.jpg");
-        // Or load your own image using a URL!
+ 
         String fileName = "py_logo.png";
         int[][] imageData = imgToTwoD(
                 "./python_logo.png");
@@ -75,12 +73,33 @@ public class ImageProcessing {
     // ================================================================================================
     public static int[][] stretchHorizontally(int[][] imageTwoD) {
         // TODO: Fill in the code for this method
-        return null;
+        // double each pixel horizonally
+        int[][] imageTwoD_Copy = imageTwoD.clone();
+        int[][] horizontalStrech = new int[imageTwoD.length][imageTwoD[0].length*2];
+        for (int i = 0; i < imageTwoD.length; i++) {
+            int pointerOne = 0;
+            //   
+            int pointerTwo = 0;
+            // j+1; = 2+1 = 3 
+            for (int j = 0; j < imageTwoD[i].length*2; j++) {
+                // double each pixel horizontally
+                horizontalStrech[i][pointerOne] = imageTwoD[i][j];
+                horizontalStrech[i][pointerTwo] = imageTwoD[i][j];
+                pointerOne++;
+                pointerTwo++;
+            }
+
+        }
+
+        return horizontalStrech;
     }
 
     public static int[][] shrinkVertically(int[][] imageTwoD) {
         // TODO: Fill in the code for this method
+        // double each pixel vertically
+
         return null;
+
     }
 
     public static int[][] invertImage(int[][] imageTwoD) {
@@ -115,6 +134,7 @@ public class ImageProcessing {
     public static int[][] imgToTwoD(String inputFileOrLink) {
         try {
             BufferedImage image = null;
+            //
             if (inputFileOrLink.substring(0, 4).toLowerCase().equals("http")) {
                 URL imageUrl = new URL(inputFileOrLink);
                 image = ImageIO.read(imageUrl);
@@ -124,6 +144,7 @@ public class ImageProcessing {
             } else {
                 image = ImageIO.read(new File(inputFileOrLink));
             }
+            //
             int imgRows = image.getHeight();
             int imgCols = image.getWidth();
             int[][] pixelData = new int[imgRows][imgCols];
