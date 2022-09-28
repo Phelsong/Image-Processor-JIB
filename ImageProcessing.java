@@ -13,21 +13,91 @@ public class ImageProcessing {
         int[][] imageData = imgToTwoD(
                 "./python_logo.png");
         // viewImageData(imageData);
-        // -----------------------------------------------
-        // int[][] trimmed = trimBorders(imageData, 60);
-        // int[][] negative = negativeColor(imageData);
-        // int[][] horizontalStrech = stretchHorizontally(imageData);
-        // int[][] verticalStrech = stretchVertically(imageData);
-        // int[][] horizonalShrink = shrinkHorizontally(imageData);
-        int[][] verticalShrink = shrinkVertically(imageData);
         // -------------------------------------------------------------
+        // int[][] trimmed = trimBorders(imageData, 60);
         // twoDToImage(trimmed, "trimmed_" + fileName);
+        // ------------
+        // int[][] negative = negativeColor(imageData);
         // twoDToImage(negative, "negative_" + fileName);
+        // ------------
+        // int[][] horizontalStrech = stretchHorizontally(imageData);
         // twoDToImage(horizontalStrech, "horizontalStretch_" + fileName);
+        // ------------
+        // int[][] verticalStrech = stretchVertically(imageData);
         // twoDToImage(verticalStrech, "verticalStretch_" + fileName);
+        // ------------
+        // int[][] horizonalShrink = shrinkHorizontally(imageData);
         // twoDToImage(horizonalShrink, "horizonalShrink_" + fileName);
-        twoDToImage(verticalShrink, "verticalShrink_" + fileName);
-        // -----------------------------------------------------
+        // ------------
+        // int[][] verticalShrink = shrinkVertically(imageData);
+        // twoDToImage(verticalShrink, "verticalShrink_" + fileName);
+        // -----------
+        // int[][] inverted = invertImage(imageData);
+        // twoDToImage(inverted, "inverted_" + fileName);
+        // -------------------------------------------------------------
+        int[][] colorFilter = colorFilter(imageData, 125, 0, 0, 4);
+        twoDToImage(colorFilter, "colorFilter_" + fileName);
+        // -------------------------------------------------------------
+        // int [][] paintedRandomImage = paintRandomImage(
+        // canvas, width, height, rowPosition, colPosition, color);
+        // imgToTwoD(paintedRandomImage, "random_img_"+fileName)
+        // -------------------------------------------------------------
+        // int [][] paintedRectangle = paintRectangle(canvas, width, height,
+        // rowPosition, colPosition, color)
+        // twoDToImage(paintedRectangle, "rectangleImg_"+fileName);
+        // -------------------------------------------------------------
+        // int [][] generateRectangles(canvas, width, height, rowPosition, colPosition,
+        // color)
+        // twoDToImage(generateRectangles, "some_rectangles");
+        // -------------------------------------------------------------
+        // ##
+        // ------------ !! Stretch Goals !! ------------
+        // ##
+        // -------------------------------------------------------------
+        // int [][] paintedCircle = paintCircle(canvas, width, height, rowPosition,
+        // colPosition, color)
+        // twoDToImage(paintedCircle, "circleImg_"+fileName);
+        // // -------------------------------------------------------------
+        // int [][] paintedTriangle = paintTriangle(canvas, width, height, rowPosition,
+        // colPosition, color)
+        // twoDToImage(paintedTriangle, "triangleImg_"+fileName);
+        // // -------------------------------------------------------------
+        // int [][] paintedEllipse = paintEllipse(canvas, width, height, rowPosition,
+        // colPosition, color)
+        // twoDToImage(paintedEllipse, "ellipseImg_"+fileName);
+        // // -------------------------------------------------------------
+        // int [][] paintedLine = paintLine(canvas, width, height, rowPosition,
+        // colPosition, color)
+        // twoDToImage(paintedLine, "lineImg_"+fileName);
+        // // -------------------------------------------------------------
+        // int [][] paintedCurve = paintCurve(canvas, width, height, rowPosition,
+        // colPosition, color)
+        // twoDToImage(paintedCurve, "curveImg_"+fileName);
+        // // -------------------------------------------------------------
+        // int [][] paintedText = paintText(canvas, width, height, rowPosition,
+        // colPosition, color)
+        // twoDToImage(paintedText, "textImg_"+fileName);
+        // // -------------------------------------------------------------
+        // int [][] paintedImage = paintImage(canvas, width, height, rowPosition,
+        // colPosition, color)
+        // twoDToImage(paintedImage, "imageImg_"+fileName);
+        // // -------------------------------------------------------------
+        // int[][] gaussianBlur = gaussianBlur(imageData);
+        // twoDToImage(gaussianBlur, "gaussianBlur_" + fileName);
+        // // -------------------------------------------------------------
+        // int[][] sobel = sobel(imageData);
+        // twoDToImage(sobel, "sobel_" + fileName);
+        // // -------------------------------------------------------------
+        // int[][] edgeDetection = edgeDetection(imageData);
+        // twoDToImage(edgeDetection, "edgeDetection_" + fileName);
+        // // -------------------------------------------------------------
+        // int[][] scharr = scharr(imageData);
+        // twoDToImage(scharr, "scharr_" + fileName);
+        // -------------------------------------------------------------
+        //
+        // ##
+        // {Project End}
+        // ##
         // int[][] allFilters =
         // stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData),
         // 50)), 200, 20, 40)));
@@ -161,7 +231,7 @@ public class ImageProcessing {
                 for (int h = 0; h < verticalShrink[0].length; h++) {
                     //
                     verticalShrink[v][h] = imageTwoD[vPointer][h];
-                    
+
                 } // --------------
                 vPointer += 2;
             } // -------------------------
@@ -174,15 +244,63 @@ public class ImageProcessing {
 
     // =================================================================================
     public static int[][] invertImage(int[][] imageTwoD) {
-        // TODO: Fill in the code for this method
-        return null;
+        int[][] invertedImg = new int[imageTwoD.length][imageTwoD[0].length];
+        //
+        for (int v = 0; v < imageTwoD.length; v++) {
+            for (int h = 0; h < imageTwoD[v].length; h++) {
+                invertedImg[v][h] = imageTwoD[(imageTwoD.length - 1) - v][(imageTwoD[v].length - 1) - h];
+            } // -------
+        } // ------------------------------
+        return invertedImg;
     }
 
     // ====================================================================================
     public static int[][] colorFilter(int[][] imageTwoD, int redChangeValue, int greenChangeValue,
-            int blueChangeValue) {
-        // TODO: Fill in the code for this method
-        return null;
+            int blueChangeValue, int alphaChangeValue) {
+        int[][] manipulatedImg = new int[imageTwoD.length][imageTwoD[0].length];
+        for (int v = 0; v < imageTwoD.length; v++) {
+            for (int h = 0; h < imageTwoD[v].length; h++) {
+                // ------
+                int[] rgba = getRGBAFromPixel(imageTwoD[v][h]);
+                int newR = rgba[0] + redChangeValue;
+                int newG = rgba[1] + greenChangeValue;
+                int newB = rgba[2] + blueChangeValue;
+                int newA = rgba[3] + alphaChangeValue;
+                // --------
+                if (newR > 255) {
+                    newR = 255;
+                } else if (newR < 0) {
+                    newR = 0;
+                }
+
+                if (newG > 255) {
+                    newG = 255;
+                } else if (newG < 0) {
+                    newG = 0;
+                }
+
+                if (newB > 255) {
+                    newB = 255;
+                } else if (newB < 0) {
+                    newB = 0;
+                }
+
+                if (newA > 255) {
+                    newA = 255;
+                } else if (newA < 0) {
+                    newA = 0;
+                }
+                // -------
+                rgba[0] = newR;
+                rgba[1] = newG;
+                rgba[2] = newB;
+                rgba[3] = newA;
+                // ------
+
+                manipulatedImg[v][h] = getColorIntValFromRGBA(rgba);
+            } // ----
+        } // -----------------------------------------------
+        return manipulatedImg;
     }
 
     // ====================================================================================
