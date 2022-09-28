@@ -45,9 +45,8 @@ public class ImageProcessing {
         // 400, 400, 222);
         // twoDToImage(paintedRectangle, "rectangleImg_"+fileName);
         // -------------------------------------------------------------
-        int [][] generateRectangles(canvas, width, height, rowPosition, colPosition,
-        color)
-        twoDToImage(generateRectangles, "some_rectangles");
+        int[][] generatedRects = generateRectangles(imageData, 5);
+        twoDToImage(generatedRects, "some_rectangles" + fileName);
         // -------------------------------------------------------------
         // ##
         // ------------ !! Stretch Goals !! ------------
@@ -336,8 +335,18 @@ public class ImageProcessing {
 
     // ====================================================================================
     public static int[][] generateRectangles(int[][] canvas, int numRectangles) {
-        // TODO: Fill in the code for this method
-        return null;
+        Random rand = new Random();
+        for (int i = 0; i < numRectangles; i++) {
+            int randomWidth = rand.nextInt(canvas[0].length);
+            int randomHeight = rand.nextInt(canvas.length);
+            int randomRowPos = rand.nextInt(canvas.length - randomHeight);
+            int randomColPos = rand.nextInt(canvas[0].length - randomWidth);
+            // --------
+            int[] rgba = { rand.nextInt(256), rand.nextInt(256), rand.nextInt(256), 255 };
+            int randomColor = getColorIntValFromRGBA(rgba);
+            canvas = paintRectangle(canvas, randomWidth, randomHeight, randomRowPos, randomColPos, randomColor);
+        } // --------
+        return canvas;
     }
 
     // ====================================================================================
