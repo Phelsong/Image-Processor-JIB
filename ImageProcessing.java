@@ -156,13 +156,14 @@ public class ImageProcessing {
         int[][] verticalShrink = new int[imageTwoD.length / 2 + ifOdd][imageTwoD[0].length];
         // -------------
         try {
+            int vPointer = 0;
             for (int v = 0; v < verticalShrink.length; v++) {
-                int vPointer = 0;
                 for (int h = 0; h < verticalShrink[0].length; h++) {
                     //
                     verticalShrink[v][h] = imageTwoD[vPointer][h];
-                    vPointer += 2;
+                    
                 } // --------------
+                vPointer += 2;
             } // -------------------------
             return verticalShrink;
         } catch (Exception e) {
