@@ -14,12 +14,16 @@ public class ImageProcessing {
                 "./python_logo.png");
         viewImageData(imageData);
         //
-        int[][] trimmed = trimBorders(imageData, 60);
-        // System.out.println(Arrays.deepToString(imageData));
-        int[][] negative = negativeColor(imageData);
+        // int[][] trimmed = trimBorders(imageData, 60);
+        // int[][] negative = negativeColor(imageData);
+        // int[][] horizontalStrech = stretchHorizontally(imageData);
+        int[][] verticalStrech = stretchVertically(imageData);
         //
-        twoDToImage(trimmed, "trimmed_" + fileName);
-        twoDToImage(negative, "negative_" + fileName);
+        // twoDToImage(trimmed, "trimmed_" + fileName);
+        // twoDToImage(negative, "negative_" + fileName);
+        // twoDToImage(horizontalStrech, "horizontalStretch_" + fileName);
+        twoDToImage(verticalStrech, "verticalStretch_" + fileName);
+        //
         // int[][] allFilters =
         // stretchHorizontally(shrinkVertically(colorFilter(negativeColor(trimBorders(invertImage(imageData),
         // 50)), 200, 20, 40)));
@@ -72,21 +76,18 @@ public class ImageProcessing {
 
     // ================================================================================================
     public static int[][] stretchHorizontally(int[][] imageTwoD) {
-        // TODO: Fill in the code for this method
-        // double each pixel horizonally
-        int[][] imageTwoD_Copy = imageTwoD.clone();
+        // doubles each pixel horizonally
         int[][] horizontalStrech = new int[imageTwoD.length][imageTwoD[0].length*2];
+        //
         for (int i = 0; i < imageTwoD.length; i++) {
+            //
             int pointerOne = 0;
-            //   
-            int pointerTwo = 0;
-            // j+1; = 2+1 = 3 
-            for (int j = 0; j < imageTwoD[i].length*2; j++) {
-                // double each pixel horizontally
-                horizontalStrech[i][pointerOne] = imageTwoD[i][j];
-                horizontalStrech[i][pointerTwo] = imageTwoD[i][j];
-                pointerOne++;
-                pointerTwo++;
+            // 
+            for (int u = 0; u < imageTwoD[0].length; u++) {
+                // doubles each pixel horizontally
+                horizontalStrech[i][pointerOne] = imageTwoD[i][u];
+                horizontalStrech[i][pointerOne+1] = imageTwoD[i][u];
+                pointerOne+=2;
             }
 
         }
@@ -94,12 +95,28 @@ public class ImageProcessing {
         return horizontalStrech;
     }
 
-    public static int[][] shrinkVertically(int[][] imageTwoD) {
-        // TODO: Fill in the code for this method
+    public static int[][] stretchVertically(int[][] imageTwoD) {
         // double each pixel vertically
+        int[][] verticalStrech = new int[imageTwoD.length*2][imageTwoD[0].length];
+         //
+        int pointer=0;
+        for (int i = 0; i < imageTwoD.length; i++) {
+            //
+            for (int u = 0; u < imageTwoD[0].length; u++) {
+                //
+                verticalStrech[pointer][u] = imageTwoD[i][u];
+                verticalStrech[pointer+1][u] = imageTwoD[i][u];
+                
+            }
+            pointer+=2;
+        }
+         return verticalStrech;
+    }
 
-        return null;
+    public static int[][] shrinkVertically(int[][] imageTwoD) {
+        int[][]verticalShrink = new int[imageTwoD.length/2][imageTwoD[0].length];
 
+        return verticalShrink;
     }
 
     public static int[][] invertImage(int[][] imageTwoD) {
